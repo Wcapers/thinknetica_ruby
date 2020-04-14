@@ -1,9 +1,7 @@
 def get_pifagor(a,b,c)
-
   if a > b && a > c
     hypotenuse = a
     sum_sqr = b**2 + c**2
-
   elsif b > a && b > c
     hypotenuse = b
     sum_sqr = a**2 + c**2
@@ -11,7 +9,7 @@ def get_pifagor(a,b,c)
     hypotenuse = c
     sum_sqr = b**2 + a**2
   end
-hypotenuse**2 == sum_sqr
+    hypotenuse**2 == sum_sqr
  end
 
 puts "Введите 1-ю сторону"
@@ -22,7 +20,6 @@ puts "Введите 3-ю сторону"
 c = gets.chomp.to_f
 if a == b && b == c
   puts "Треугольник равнобедренный и равносторонний"
-  exit
 elsif a == b || b == c || a == c
   puts "Треугольник равнобедренный"
 elsif get_pifagor(a, b, c)
