@@ -1,5 +1,8 @@
-def fibonacci( n )
-  return  n  if ( 0..1 ).include? n
-  ( fibonacci( n - 1 ) + fibonacci( n - 2 ) )
+def fib(n)
+  first_num, second_num = [0, 1]
+  (n - 1).times do
+    first_num, second_num = second_num, first_num + second_num
+  end
+  puts first_num
 end
-puts fibonacci( 5 )
+fib(100)
