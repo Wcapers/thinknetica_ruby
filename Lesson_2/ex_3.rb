@@ -4,8 +4,8 @@ def fibonacci(n)
 end
 i = 1;
 result = [fibonacci(i-1)]
-while result.last < 89
-result.push(fibonacci(i))
-i += 1
+while fibonacci(i) < 100
+  result.push(fibonacci(i))
+  i += 1
 end
 puts result
