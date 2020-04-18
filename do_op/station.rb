@@ -16,15 +16,25 @@ class Station
 
   def arrived (train) # добавляем поезд
     @trains << train
+    puts "Поезд с номером #{train.number} прибыл на станцию #{self.name}"
   end
 
   def left (train) # Убираем поезд
     @trains.delete(train)
+    puts "Поезд с номером #{train.number} убывает"
   end
-
-  def arr_type(type) # Список поездов по типу
+  def list_trains
+    if @trains.any?
+      @trains
+    else
+      puts "Поездов нет"
+    end
+  end
+  def list_type(type) # Список поездов по типу
     if @trains.any?
       arr = @trains.select { |i| i.type == type }
     else
       puts "Поездов типа #{type} нет"
+    end
   end
+end
