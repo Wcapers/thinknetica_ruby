@@ -1,17 +1,5 @@
-=begin Класс Train (Поезд):
-Имеет номер (произвольная строка) и тип (грузовой, пассажирский) и количество вагонов, эти данные указываются при создании экземпляра класса
-Может набирать скорость
-Может возвращать текущую скорость
-Может тормозить (сбрасывать скорость до нуля)
-Может возвращать количество вагонов
-Может прицеплять/отцеплять вагоны (по одному вагону за операцию, метод просто увеличивает или уменьшает количество вагонов). Прицепка/отцепка вагонов может осуществляться только если поезд не движется.
-Может принимать маршрут следования (объект класса Route).
-При назначении маршрута поезду, поезд автоматически помещается на первую станцию в маршруте.
-Может перемещаться между станциями, указанными в маршруте. Перемещение возможно вперед и назад, но только на 1 станцию за раз.
-Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
-=end
 class Train
-  attr_accessor :speed, :carriage, :route, :point
+  attr_accessor :speed, :carriage, :route, :curent
   attr_reader :number, :type
 
   def initialize (number, type, carriage)
@@ -21,29 +9,55 @@ class Train
     @speed = 0
   end
 
-  def add_speed(speed) #Прибавляем скорость
+  def add_speed (speed) #Прибавляем скорость
     puts "К текущей скорости#{@speed} добавлено #{speed}"
     @speed += speed.to_i
   end
 
-def stop
+  def stop
     @speed = 0
     puts "Поезд остановился"
-end
+  end
 
-def add_cariage #добавляем вагон
-    if @speed = 0
+  def add_cariage #добавляем вагон
+    if @speed == 0
       @carriage += 1
       puts "Вагон прицеплен, текущее кол-во вагонов: #{@carriage}"
     else
       puts "Прицепка невозможна, остановите поезд"
     end
-end
+  end
 
-def rem_cariage #удаляем вагон
-  if @speed = 0 && @carriage >= 1
-    @carriage -= 1
-    puts "Вагон отцеплен, текущее кол-во вагонов: #{@carriage}"
-  else
-    puts "Отцепка невозможна"
+  def rem_cariage #удаляем вагон
+    if @speed = 0 && @carriage >= 1
+      @carriage -= 1
+      puts "Вагон отцеплен, текущее кол-во вагонов: #{@carriage}"
+    else
+      puts "Отцепка невозможна"
+    end
+  end
+  def set_route(obj_route)
+    @route = obj_route
+    @curent = obj_route.route.first
+    @route.route[0].arrived(self)
+  end
+
+  def move_forward
+    next_id = @route.route.index(@curent) + 1
+    if @route.route[next_id] != nil
+      @curent = @route.route[next_id]
+      @route.route[next_id].arrived(self)
+    else
+      puts "Движение невозможно"
+    end
+
+  def move_back
+    prev_id = @route.route.index(@curent) - 1
+    if prev_id > 0
+      @curent = @route.route[prev_id]
+      @route.route[prev_id].arrived(self)
+    else
+      puts "Движение невозможно"
+    end
+  end
 end
