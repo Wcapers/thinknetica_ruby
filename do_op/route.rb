@@ -4,7 +4,7 @@
 Может выводить список всех станций по-порядку от начальной до конечной OK
 =end
 class Route
-attr_reader :point
+  attr_reader :point
   def initialize (first_station, last_station)
     @point = [first_station, last_station]
   end
@@ -15,8 +15,8 @@ attr_reader :point
   end
 
   def del_station(station)
-      @point.delete(station)
-      puts "Станция #{station.name} удалена"
+    @point.delete(station)
+    puts "Станция #{station.name} удалена"
   end
 
   def puts_point
