@@ -39,7 +39,7 @@ class Train
   end
 
   def set_point(route) #назначение маршрута
-    @point = roue
+    @point = route
     @curent = route.point.first
     @point.point[0].arrived(self)
   end
