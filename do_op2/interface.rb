@@ -5,16 +5,7 @@ require './pass_train'
 require './cargo_train'
 require './pass_carriage'
 require './cargo_carriage'
-=begin
-- Создавать станции OK
-- Создавать поезда OK
-- Создавать маршруты и управлять станциями в нем (добавлять, удалять?) OK
-- Назначать маршрут поезду OK?
-- Добавлять вагоны к поезду OK?
-- Отцеплять вагоны от поезда OK?
-- Перемещать поезд по маршруту вперед и назад ОК?
-- Просматривать список станций и список поездов на станции Ok?
-=end
+
 class Interface
   attr_reader :stations, :trains, :routes
 
