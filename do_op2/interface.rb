@@ -16,7 +16,7 @@ require './cargo_carriage'
 - Просматривать список станций и список поездов на станции Ok?
 =end
 class Interface
-  attr_accessor :stations, :trains, :routes
+  attr_reader :stations, :trains, :routes
 
   def initialize
     @stations = Array.new
@@ -47,6 +47,8 @@ class Interface
     end
   end
 
+private #пользователь не должен явно вызывать данные методы, т.к. нарушится инкапсуляция
+  attr_writer :stations, :trains, :routes
   def route_menu
     loop do
       puts "Введите 1 - для создания маршрута, 2 - для добавления станции в маршрут, 3 - для удаления станции из маршрута, 0 - веруться в главное меню"
