@@ -12,6 +12,7 @@ class Station
   def initialize (name)
     @name = name
     @trains = Array.new
+    puts "Создана станция: #{@name}"
   end
 
   def arrived (train) # добавляем поезд

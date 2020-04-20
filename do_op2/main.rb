@@ -1,2 +1,2 @@
 require './interface'
-i = Interface.new
+Interface.new.start

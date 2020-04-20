@@ -22,7 +22,7 @@ class Train
 
   def add_carriage (carriage)#добавляем вагон
     if @speed == 0
-      @carriage << cariage
+      @carriage << carriage
       puts "Вагон прицеплен, текущее кол-во вагонов: #{@carriage.size}"
     else
       puts "Прицепка невозможна, остановите поезд"
@@ -31,7 +31,7 @@ class Train
 
   def rem_carriage #удаляем вагон
     if @speed == 0 && @carriage.size > 1
-      @carriage.slise!(-1)
+      @carriage.slice!(-1)
       puts "Вагон отцеплен, текущие количество вагонов: #{@carriage.size}"
     else
       puts "Отцепка невозможна"

@@ -6,7 +6,7 @@ require './cargo_train'
 require './pass_carriage'
 require './cargo_carriage'
 =begin
-- Создавать станции OK добавить что станция создана 
+- Создавать станции OK
 - Создавать поезда OK
 - Создавать маршруты и управлять станциями в нем (добавлять, удалять?) OK
 - Назначать маршрут поезду OK?
@@ -27,11 +27,11 @@ class Interface
     loop do
     puts "Введите 1 для создания станции"
     puts "Введите 2 для создания поезда"
-    puts "Введите 3 создания и редактирования маршрута" #"Введите 3 для добавления станции в маршрут"
+    puts "Введите 3 для создания и редактирования маршрута"
     puts "Введите 4 для назначения маршрута поезду"
     puts "Введите 5 для операций с вагонами"
     puts "Введите 6 для перемещения поезда вперед или назад по маршруту"
-    puts "Введите 7 для вывода списков" #списка станций или списка поездов"
+    puts "Введите 7 для вывода списков"
     puts "Введите 0 для выхода"
     input = gets.chomp.to_i
     case input
@@ -127,8 +127,8 @@ class Interface
     @stations.each_with_index { |name, index| puts "#{name.name} => #{index}" }
   end
 
-  def print_stations_list
-    puts "Список доступных поездов:"
+  def print_train_list
+    puts "Список доступных поездов :"
     @trains.each_with_index { |name, index| puts "Поезд номер#{name.number} => #{index}" }
   end
 
@@ -140,9 +140,9 @@ class Interface
   end
 
   def create_route
-    puts "Начальной станция:"
+    puts "Начальная станция:"
     first_station = select_station
-    puts "Конечная станции"
+    puts "Конечная станция"
     last_station = select_station
     @routes << Route.new(@stations[first_station], @stations[last_station])
   end
@@ -204,7 +204,7 @@ class Interface
   def print_trains_stations
     s = select_station
     if @stations[s].trains.any?
-      puts @stations[s].trains
+      @stations[s].trains.each{|i| puts "Поезд номер: #{i.number}, тип: #{i.type}"}
     else
       puts "Поездов нет"
     end
