@@ -1,4 +1,4 @@
-class CargoTrain
+class CargoTrain < Train
     def initialize(number)
       super(number)
       @type = "cargo"
@@ -9,4 +9,6 @@ class CargoTrain
         super
       else
         puts "Неподходящий тип вагона"
-  end
+      end
+    end
+end

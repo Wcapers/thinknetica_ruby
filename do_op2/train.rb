@@ -7,6 +7,7 @@ class Train
     type = nil
     @carriage = Array.new
     @speed = 0
+    puts "Поезд номер #{@number} создан"
   end
 
   def add_speed (speed) #Прибавляем скорость

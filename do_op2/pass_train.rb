@@ -8,5 +8,6 @@ class PassTrain < Train
       super
     else
       puts "Неподходящий тип вагона"
-end
+    end
+  end
 end
