@@ -19,9 +19,9 @@ class Interface
   attr_reader :stations, :trains, :routes
 
   def initialize
-    @stations = Array.new
-    @trains = Array.new
-    @routes = Array.new
+    @stations = []
+    @trains = []
+    @routes = []
   end
     def start
     loop do
@@ -107,14 +107,10 @@ private
       selected = gets.to_i
       puts "Введите номер поезда"
       number = gets.to_i
-      if selected == 1
-        @trains << PassTrain.new(number)
-        break
-      elsif selected == 2
-        @trains << CargoTrain.new(number)
-        break
-      elsif selected == 0
-        start
+      case selected
+      when 1 then @trains << PassTrain.new(number)
+      when 2 then @trains << CargoTrain.new(number)
+      when 0 then break
       end
     end
   end
@@ -157,7 +153,6 @@ private
   def give_route
     select_train.set_point(select_route)
   end
-
   def select_route
     print_routes_list
     puts "Введите индекс нужного маршрута"
