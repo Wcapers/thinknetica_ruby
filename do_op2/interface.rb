@@ -98,7 +98,7 @@ private
   end
   def create_station
     puts "Введите имя станции"
-    name = gets.chomp.to_sym
+    name = gets.chomp
     @stations << Station.new(name)
   end
   def create_train
@@ -153,6 +153,7 @@ private
   def give_route
     select_train.set_point(select_route)
   end
+
   def select_route
     print_routes_list
     puts "Введите индекс нужного маршрута"
