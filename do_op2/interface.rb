@@ -10,10 +10,11 @@ class Interface
   attr_reader :stations, :trains, :routes
 
   def initialize
-    @stations = Array.new
-    @trains = Array.new
-    @routes = Array.new
+    @stations = []
+    @trains = []
+    @routes = []
   end
+
     def start
     loop do
     puts "Введите 1 для создания станции"
@@ -89,7 +90,7 @@ private #пользователь не должен явно вызывать д
   end
   def create_station
     puts "Введите имя станции"
-    name = gets.chomp.to_sym
+    name = gets.chomp
     @stations << Station.new(name)
   end
   def create_train
@@ -98,14 +99,10 @@ private #пользователь не должен явно вызывать д
       selected = gets.to_i
       puts "Введите номер поезда"
       number = gets.to_i
-      if selected == 1
-        @trains << PassTrain.new(number)
-        break
-      elsif selected == 2
-        @trains << CargoTrain.new(number)
-        break
-      elsif selected == 0
-        start
+      case selected
+      when 1 then @trains << PassTrain.new(number)
+      when 2 then @trains << CargoTrain.new(number)
+      when 0 then break
       end
     end
   end
