@@ -5,16 +5,24 @@ require './pass_train'
 require './cargo_train'
 require './pass_carriage'
 require './cargo_carriage'
-
+=begin
+- Создавать станции OK
+- Создавать поезда OK
+- Создавать маршруты и управлять станциями в нем (добавлять, удалять?) OK
+- Назначать маршрут поезду OK?
+- Добавлять вагоны к поезду OK?
+- Отцеплять вагоны от поезда OK?
+- Перемещать поезд по маршруту вперед и назад ОК?
+- Просматривать список станций и список поездов на станции Ok?
+=end
 class Interface
   attr_reader :stations, :trains, :routes
 
   def initialize
-    @stations = []
-    @trains = []
-    @routes = []
+    @stations = Array.new
+    @trains = Array.new
+    @routes = Array.new
   end
-
     def start
     loop do
     puts "Введите 1 для создания станции"
@@ -39,7 +47,7 @@ class Interface
     end
   end
 
-private #пользователь не должен явно вызывать данные методы, т.к. нарушится инкапсуляция
+private
   attr_writer :stations, :trains, :routes
   def route_menu
     loop do
@@ -90,7 +98,7 @@ private #пользователь не должен явно вызывать д
   end
   def create_station
     puts "Введите имя станции"
-    name = gets.chomp
+    name = gets.chomp.to_sym
     @stations << Station.new(name)
   end
   def create_train
@@ -99,10 +107,14 @@ private #пользователь не должен явно вызывать д
       selected = gets.to_i
       puts "Введите номер поезда"
       number = gets.to_i
-      case selected
-      when 1 then @trains << PassTrain.new(number)
-      when 2 then @trains << CargoTrain.new(number)
-      when 0 then break
+      if selected == 1
+        @trains << PassTrain.new(number)
+        break
+      elsif selected == 2
+        @trains << CargoTrain.new(number)
+        break
+      elsif selected == 0
+        start
       end
     end
   end
@@ -125,8 +137,7 @@ private #пользователь не должен явно вызывать д
   def select_station
     print_stations_list
     puts "Введите индекс нужной станции"
-    gets.chomp.to_i
-
+    @stations[gets.chomp.to_i]
   end
 
   def create_route
@@ -134,67 +145,58 @@ private #пользователь не должен явно вызывать д
     first_station = select_station
     puts "Конечная станция"
     last_station = select_station
-    @routes << Route.new(@stations[first_station], @stations[last_station])
+    @routes << Route.new(first_station, last_station)
   end
 
   def select_train
     print_train_list
     puts "Введите индекс нужного поезда"
-    gets.chomp.to_i
+    @trains[gets.chomp.to_i]
   end
 
   def give_route
-    t = select_train
-    r = select_route
-    @trains[t].set_point(@routes[r])
+    select_train.set_point(select_route)
   end
 
   def select_route
     print_routes_list
     puts "Введите индекс нужного маршрута"
-    gets.chomp.to_i
+    @routes[gets.chomp.to_i]
   end
 
   def add_in_route
-    r = select_route
-    s = select_station
-    @routes[r].add_station(@stations[s])
+    select_route.add_station(select_station)
   end
 
   def del_in_route
-    r = select_route
-    s = select_station
-    @routes[r].del_station(@stations[s])
+    select_route.del_station(select_station)
   end
 
   def hitch_carriage
     t = select_train
-    if @trains[t].is_a?(PassTrain)
-      @trains[t].add_carriage(PassCarriage.new)
-    elsif @trains[t].is_a?(CargoTrain)
-      @trains[t].add_carriage(CargoCarriage.new)
+    if t.is_a?(PassTrain)
+      t.add_carriage(PassCarriage.new)
+    elsif t.is_a?(CargoTrain)
+      t.add_carriage(CargoCarriage.new)
     end
   end
 
   def del_carriage
-    t = select_train
-    @trains[t].rem_carriage
+    select_train.rem_carriage
   end
 
   def forward
-    t = select_train
-    @trains[t].move_forward
+    select_train.move_forward
   end
 
   def back
-    t = select_train
-    @trains[t].move_back
+    select_train.move_back
   end
 
   def print_trains_stations
     s = select_station
-    if @stations[s].trains.any?
-      @stations[s].trains.each{|i| puts "Поезд номер: #{i.number}, тип: #{i.type}"}
+    if s.trains.any?
+      s.trains.each{|i| puts "Поезд номер: #{i.number}, тип: #{i.type}"}
     else
       puts "Поездов нет"
     end
