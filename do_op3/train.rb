@@ -1,8 +1,11 @@
 require './manufacturer'
+require './instance_counter'
+
 class Train
   attr_accessor :speed, :carriage, :point, :curent
   attr_reader :number, :type
   include Manufacturer
+  include InstanceCounter
   @@all_trains = []
 
   def initialize (number)
@@ -12,6 +15,7 @@ class Train
     @speed = 0
     puts "Поезд номер #{@number} создан"
     @@all_trains << self
+    register_instance
   end
   def self.find(number)
     @@all_trains.each {|o| return o if o.number == number}

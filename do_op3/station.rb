@@ -5,6 +5,7 @@
 Может возвращать список поездов на станции по типу (см. ниже): кол-во грузовых, пассажирских ОК
 Может отправлять поезда (по одному за раз, при этом, поезд удаляется из списка поездов, находящихся на станции). ОК
 =end
+require './instance_counter'
 class Station
   attr_accessor :trains
   attr_reader :name
@@ -15,6 +16,7 @@ class Station
     @trains = Array.new
     puts "Создана станция: #{@name}"
     @@all_stations << self
+    register_instance
   end
 
   def self.all

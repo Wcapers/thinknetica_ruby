@@ -3,10 +3,12 @@
 Может удалять промежуточную станцию из списка OK
 Может выводить список всех станций по-порядку от начальной до конечной OK
 =end
+require './instance_counter'
 class Route
   attr_reader :point
   def initialize (first_station, last_station)
     @point = [first_station, last_station]
+    register_instance
   end
 
   def add_station (station)
