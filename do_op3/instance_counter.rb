@@ -6,6 +6,7 @@ module InstanceCounter
 
   module ClassMethods
     attr_accessor :instances
+
     def register_instance
       @instances ||= 0
       @instances += 1
@@ -14,6 +15,7 @@ module InstanceCounter
 
   module InstanceMethods
     private
+
     def register_instance
       self.class.send :register_instance
     end

@@ -6,7 +6,7 @@ class Train
   attr_reader :number, :type
   include Manufacturer
   include InstanceCounter
-  @@all_trains = []
+  @@all_trains = {}
 
   def initialize (number)
     @number = number
@@ -14,12 +14,14 @@ class Train
     @carriage = Array.new
     @speed = 0
     puts "Поезд номер #{@number} создан"
-    @@all_trains << self
+    @@all_trains[number] = self
     register_instance
   end
+
   def self.find(number)
-    @@all_trains.each {|o| return o if o.number == number}
+    @@all_trains[number]
   end
+
   def add_speed (speed) #Прибавляем скорость
     puts "К текущей скорости #{@speed} добавлено #{speed}"
     @speed += speed.to_i
