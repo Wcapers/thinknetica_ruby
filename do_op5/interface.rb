@@ -63,11 +63,13 @@ private
 
   def carriage_menu
     loop do
-      puts "Введите 1 - для прицепки вагона, 2 - для отцепки вагона, 0 - веруться назад"
+      puts "Введите 1 - для прицепки вагона, 2 - для отцепки вагона, 3 - для создания вагона, 4 - для заполнения вагона, 0 - веруться назад"
       selected = gets.chomp.to_i
       case selected
       when 1 then hitch_carriage
       when 2 then del_carriage
+      when 3 then create_carriage
+      when 3 then fill_carriage
       when 0 then break
       else
         puts UNKNOWN
@@ -133,7 +135,24 @@ private
     end
   end
 
-
+  def create_carriage
+    puts "Выберите тип(1 - грузовой, 2 - пассажирский, 0 - вернуться в главное меню)"
+    selected = gets.chomp.to_i
+  loop do
+    case selected
+    when 1
+      puts "Введите обьем вагона"
+      @carriages << CargoCarriage.new(gets.chomp.to_i)
+      break
+    when 2
+      puts "Введите кол-во мест для пассажиров"
+      @carriages << PassCarriage.new(gets.chomp.to_i)
+      break
+    else
+      break
+  end
+  end
+end
   def print_routes_list
     puts "Список доступных маршрутов"
     @routes.each_with_index { |name, index| puts "#{name.point} => #{index}" }
@@ -144,9 +163,9 @@ private
     @stations.each_with_index { |name, index| puts "#{name.name} => #{index}" }
   end
 
-  def rint_carriages_list
-    puts "Список доступных станций:"
-    @stations.each_with_index { |name, index| puts "#{name.name} => #{index}" }
+  def print_carriages_list
+    puts "Список доступных вагонов:"
+    @carriages.each_with_index { |c, index| puts "#{c.type}(#{c.free_space}) => #{index}"}
   end
 
   def print_train_list
@@ -159,7 +178,11 @@ private
     puts "Введите индекс нужной станции"
     @stations[gets.chomp.to_i]
   end
-
+  def select_carriage
+    print_carriages_list
+    puts "Введите индекс нужного вагона"
+    @carriages[gets.chomp.to_i]
+  end
   def create_route
     puts "Начальная станция:"
     first_station = select_station
@@ -197,15 +220,7 @@ private
 
   def hitch_carriage
     t = select_train
-    if t.is_a?(PassTrain)
-      c = select_carriage("pass")
-      puts "Введите кол-во мест"
-      t.add_carriage(c)
-    elsif t.is_a?(CargoTrain)
-      c = select_carriage("cargo")
-      puts "Введите общий обьем"
-      t.add_carriage(c)
-    end
+    t.add_carriage(select_carriage)
   end
 
   def del_carriage
@@ -238,6 +253,15 @@ private
       else
         puts "Кол-во свободных мест: #{c.free_space}, кол-во занятых мест: #{c.booked_space}"
       end
+    end
+  end
+  def fill_carriage
+    c = select_carriage
+    if c.is_a? (CargoCarriage)
+      puts "Введите обьем, который нужно заполнить"
+      c.booking(gets.chomp.to_i)
+    else
+      c.booking
     end
   end
 end

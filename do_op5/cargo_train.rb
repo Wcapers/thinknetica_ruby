@@ -8,7 +8,7 @@ class CargoTrain < Train
       if carriage.is_a?(CargoCarriage)
         super
       else
-        puts "Неподходящий тип вагона"
+        raise "Неподходящий тип вагона"
       end
     end
 end
