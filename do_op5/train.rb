@@ -21,7 +21,7 @@ class Train
   end
 
   def every_carriage
-    @carriage.each {|c| yield c}
+    @carriage.each_with_index {|i, c| yield i, c}
   end
 
   def self.find(number)

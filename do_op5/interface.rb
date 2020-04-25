@@ -7,12 +7,13 @@ require './carriage'
 require './pass_carriage'
 require './cargo_carriage'
 class Interface
-  attr_reader :stations, :trains, :routes
+  attr_reader :stations, :trains, :routes, :carriages
   UNKNOWN = "Неизвестное значение"
   def initialize
     @stations = []
     @trains = []
     @routes = []
+    @carriages = []
   end
 
     def start
@@ -40,6 +41,7 @@ class Interface
       end
     end
   end
+
 
 private
 
@@ -118,10 +120,9 @@ private
       puts "Выберите тип поезда(1 - пассажирский, 2 - грузовой, 0 - веруться в главное меню)"
       selected = gets.to_i
       puts "Введите номер поезда"
-      number = gets.to_i
       case selected
-      when 1 then @trains << PassTrain.new(number)
-      when 2 then @trains << CargoTrain.new(number)
+      when 1 then @trains << PassTrain.new(gets.to_i)
+      when 2 then @trains << CargoTrain.new(gets.to_i)
       when 0 then break
       else
         puts UNKNOWN
@@ -132,12 +133,18 @@ private
     end
   end
 
+
   def print_routes_list
     puts "Список доступных маршрутов"
     @routes.each_with_index { |name, index| puts "#{name.point} => #{index}" }
   end
 
   def print_stations_list
+    puts "Список доступных станций:"
+    @stations.each_with_index { |name, index| puts "#{name.name} => #{index}" }
+  end
+
+  def rint_carriages_list
     puts "Список доступных станций:"
     @stations.each_with_index { |name, index| puts "#{name.name} => #{index}" }
   end
@@ -191,11 +198,13 @@ private
   def hitch_carriage
     t = select_train
     if t.is_a?(PassTrain)
+      c = select_carriage("pass")
       puts "Введите кол-во мест"
-      t.add_carriage(PassCarriage.new(gets.chomp.to_i))
+      t.add_carriage(c)
     elsif t.is_a?(CargoTrain)
+      c = select_carriage("cargo")
       puts "Введите общий обьем"
-      t.add_carriage(CargoCarriage.new(gets.chomp.to_i))
+      t.add_carriage(c)
     end
   end
 
@@ -214,9 +223,21 @@ private
   def print_trains_stations
     s = select_station
     if s.trains.any?
-      s.trains.each{|i| puts "Поезд номер: #{i.number}, тип: #{i.type}"}
+      s.every_train {|t| puts "Поезд номер: #{t.number}, тип: #{t.type}, кол-во вагонов: #{t.carriage.size}"}
     else
       raise "Поездов нет"
+    end
+  end
+
+  def print_train_carriages
+    t = select_train
+    t.every_carriage do |c, i|
+      print "Вагон номер: #{i + 1}, тип #{c.type}, "
+      if t.is_a? CargoTrain
+         puts "Кол-во свободного обьема: #{c.free_space}, кол-во занятого обьема: #{c.booked_space}"
+      else
+        puts "Кол-во свободных мест: #{c.free_space}, кол-во занятых мест: #{c.booked_space}"
+      end
     end
   end
 end

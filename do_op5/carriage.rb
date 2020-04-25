@@ -1,7 +1,7 @@
 require './manufacturer'
 class Carriage
 include Manufacturer
-attr_reader :space, :booked_space, :free_space
+attr_reader :space, :booked_space, :free_space, :type
 
 def initialize (space)
   @space = space
@@ -20,5 +20,5 @@ end
 
 protected
 
-attr_writer :space, :booked_space, :free_space
+attr_writer :space, :booked_space, :free_space, :type
 end
