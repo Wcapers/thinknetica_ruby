@@ -69,7 +69,7 @@ private
       when 1 then hitch_carriage
       when 2 then del_carriage
       when 3 then create_carriage
-      when 3 then fill_carriage
+      when 4 then fill_carriage
       when 0 then break
       else
         puts UNKNOWN
@@ -170,7 +170,7 @@ end
 
   def print_train_list
     puts "Список доступных поездов :"
-    @trains.each_with_index { |name, index| puts "Поезд номер#{name.number} => #{index}" }
+    @trains.each_with_index { |name, index| puts "Поезд номер: #{name.number} => #{index}" }
   end
 
   def select_station
