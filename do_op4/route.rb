@@ -1,10 +1,8 @@
-=begin Имеет начальную и конечную станцию, а также список промежуточных станций. Начальная и конечная станции указываютсся при создании маршрута, а промежуточные могут добавляться между ними. ОК
-Может добавлять промежуточную станцию в список ОК
-Может удалять промежуточную станцию из списка OK
-Может выводить список всех станций по-порядку от начальной до конечной OK
-=end
 require './instance_counter'
+require './valid'
 class Route
+  include InstanceCounter
+  include Valid
   attr_reader :point
   def initialize (first_station, last_station)
     @point = [first_station, last_station]
@@ -24,12 +22,6 @@ class Route
     puts @point
   end
 
-  def valid?
-    validate!
-    true
-  rescue
-    false
-  end
   private
 
   def validate!

@@ -1,9 +1,10 @@
 require './manufacturer'
 require './instance_counter'
-
+require './valid'
 class Train
   include Manufacturer
   include InstanceCounter
+  include Valid
   attr_accessor :speed, :carriage, :point, :curent
   attr_reader :number, :type
   NUMBER_FORMAT = /^[а-яa-z0-9]{3}-?[а-яa-z0-9]{2}$/i
@@ -77,12 +78,6 @@ class Train
   def get_route_list
     id = @point.point.index(@curent)
     [@point.point[id - 1].name, @point.point[id].name, @point.point[id + 1].name]
-  end
-  def valid?
-    validate!
-    true
-  rescue
-    false
   end
 
   private
