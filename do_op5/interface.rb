@@ -238,7 +238,7 @@ end
   def print_trains_stations
     s = select_station
     if s.trains.any?
-      s.every_train {|t| puts "Поезд номер: #{t.number}, тип: #{t.type}, кол-во вагонов: #{t.carriage.size}"}
+      s.each_train {|t| puts "Поезд номер: #{t.number}, тип: #{t.type}, кол-во вагонов: #{t.carriage.size}"}
     else
       raise "Поездов нет"
     end
@@ -246,7 +246,7 @@ end
 
   def print_train_carriages
     t = select_train
-    t.every_carriage do |c, i|
+    t.each_carriage do |c, i|
       print "Вагон номер: #{i + 1}, тип #{c.type}, "
       if t.is_a? CargoTrain
          puts "Кол-во свободного обьема: #{c.free_space}, кол-во занятого обьема: #{c.booked_space}"

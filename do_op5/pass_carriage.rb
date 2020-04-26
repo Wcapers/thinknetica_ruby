@@ -4,6 +4,6 @@ class PassCarriage < Carriage
     @type = "Pass"
   end
   def booking
-    super (1)
+    super(1)
   end
 end

@@ -5,7 +5,7 @@ class Train
   include Manufacturer
   include InstanceCounter
   include Valid
-  attr_accessor :speed, :carriage, :point, :curent
+  attr_accessor :speed, :carriages, :point, :curent
   attr_reader :number, :type
   NUMBER_FORMAT = /^[а-яa-z0-9]{3}-?[а-яa-z0-9]{2}$/i
   @@all_trains = {}
@@ -14,14 +14,14 @@ class Train
     @number = number.to_s
     validate!
     type = nil
-    @carriage = Array.new
+    @carriages = []
     @speed = 0
     @@all_trains[number] = self
     register_instance
   end
 
-  def every_carriage
-    @carriage.each_with_index {|i, c| yield i, c}
+  def each_carriage
+    @carriages.each_with_index {|i, c| yield i, c}
   end
 
   def self.find(number)
@@ -38,15 +38,15 @@ class Train
 
   def add_carriage (carriage)#добавляем вагон
     if @speed == 0
-      @carriage << carriage
+      @carriages << carriage
     else
       raise "Прицепка невозможна, остановите поезд"
     end
   end
 
   def rem_carriage #удаляем вагон
-    if @speed == 0 && @carriage.size > 1
-      @carriage.slice!(-1)
+    if @speed == 0 && @carriages.size > 1
+      @carriages.slice!(-1)
     else
       raise "Отцепка невозможна"
     end

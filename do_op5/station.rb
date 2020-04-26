@@ -15,7 +15,7 @@ class Station
     register_instance
   end
 
-  def every_train
+  def each_train
     @trains.each {|t| yield t}
   end
 

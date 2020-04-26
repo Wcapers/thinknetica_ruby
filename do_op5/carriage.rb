@@ -1,7 +1,7 @@
 require './manufacturer'
 class Carriage
 include Manufacturer
-attr_reader :space, :booked_space, :free_space, :type
+attr_reader :space, :booked_space, :type
 
 def initialize (space)
   @space = space
@@ -12,13 +12,12 @@ end
 def booking (n)
   if @booked_space + n <= @space
     @booked_space += n
-    @free_space -= n
   else
     raise "Нехватка места"
   end
 end
 
-protected
-
-attr_writer :space, :booked_space, :free_space, :type
+def free_space
+  @space - @booked_space
+end
 end
