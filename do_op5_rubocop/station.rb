@@ -2,16 +2,17 @@
 
 require './instance_counter'
 require './valid'
+# Station
 class Station
   attr_accessor :trains
   attr_reader :name
-  @@all_stations = []
   include InstanceCounter
   include Valid
 
   def initialize(name)
     @name = name
     validate!
+    @@all_stations = []
     @trains = []
     @@all_stations << self
     register_instance
@@ -25,28 +26,22 @@ class Station
     @@all_stations
   end
 
-  def arrived(train) # добавляем поезд
+  def arrived(train)
     @trains << train
   end
 
-  def left(train) # Убираем поезд
+  def left(train)
     @trains.delete(train)
   end
 
   def list_trains
-    if @trains.any?
-      @trains
-    else
-      raise 'Поездов нет'
-    end
+    @trains if @trains.any?
+    raise 'Поездов нет' unless @trains.any?
   end
 
-  def list_type(type) # Список поездов по типу
-    if @trains.any?
-      arr = @trains.select { |i| i.type == type }
-    else
-      raise "Поездов типа #{type} нет"
-    end
+  def list_type(type)
+    @trains.select { |i| i.type == type } if @trains.any?
+    raise "Поездов типа #{type} нет" unless @trains.any?
   end
 
   private

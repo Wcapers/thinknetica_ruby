@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# PassTrain
 class PassTrain < Train
   def initialize(number)
     super(number)
@@ -7,10 +8,7 @@ class PassTrain < Train
   end
 
   def add_carriage(carriage)
-    if carriage.is_a?(PassCarriage)
-      super
-    else
-      raise 'Неподходящий тип вагона'
-    end
+    super if carriage.is_a?(PassCarriage)
+    raise 'Неподходящий тип вагона' unless carriage.is_a?(PassCarriage)
   end
 end

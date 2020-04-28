@@ -138,21 +138,22 @@ private
   def create_carriage
     puts "Выберите тип(1 - грузовой, 2 - пассажирский, 0 - вернуться в главное меню)"
     selected = gets.chomp.to_i
-  loop do
-    case selected
-    when 1
-      puts "Введите обьем вагона"
-      @carriages << CargoCarriage.new(gets.chomp.to_i)
-      break
-    when 2
-      puts "Введите кол-во мест для пассажиров"
-      @carriages << PassCarriage.new(gets.chomp.to_i)
-      break
-    else
-      break
+    loop do
+      case selected
+      when 1
+        puts "Введите обьем вагона"
+        @carriages << CargoCarriage.new(gets.chomp.to_i)
+        break
+      when 2
+        puts "Введите кол-во мест для пассажиров"
+        @carriages << PassCarriage.new(gets.chomp.to_i)
+        break
+      else
+        break
+      end
+    end
   end
-  end
-end
+
   def print_routes_list
     puts "Список доступных маршрутов"
     @routes.each_with_index { |name, index| puts "#{name.point} => #{index}" }

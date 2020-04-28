@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require './manufacturer'
+
+# Carriage
 class Carriage
   include Manufacturer
   attr_reader :space, :booked_space, :type
@@ -11,12 +13,9 @@ class Carriage
     @booked_space = 0
   end
 
-  def booking(n)
-    if @booked_space + n <= @space
-      @booked_space += n
-    else
-      raise 'Нехватка места'
-    end
+  def booking(how)
+    @booked_space += how if @booked_space + how <= @space
+    raise 'Нехватка места' unless @booked_space + how <= @space
   end
 
   def free_space

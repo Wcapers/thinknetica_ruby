@@ -2,6 +2,7 @@
 
 require './instance_counter'
 require './valid'
+# Route
 class Route
   include InstanceCounter
   include Valid
@@ -27,8 +28,7 @@ class Route
   private
 
   def validate!
-    if point.first == point.last
-      raise 'Начальная и конечная станция не должны совпадать'
-    end
+    raise 'Начальная и конечная станция не должны совпадать' if
+      point.first == point.last
   end
 end

@@ -6,6 +6,7 @@ require './cargo_train'
 require './carriage'
 require './pass_carriage'
 require './cargo_carriage'
+
 class Interface
   attr_reader :stations, :trains, :routes, :carriages
   UNKNOWN = "Неизвестное значение"
@@ -41,7 +42,6 @@ class Interface
       end
     end
   end
-
 
 private
 
@@ -90,6 +90,7 @@ private
       end
     end
   end
+
   def list_menu
     loop do
       puts "Введите 1 - для просмотра доступных станций, 2 - для просмотра поездов на станции, 3 - для вывода списка вагонов у поезда, 0 - веруться назад"
@@ -104,10 +105,7 @@ private
       end
     end
   end
-=begin
-А для каждого поезда на станции выводить список вагонов в формате:
-- Номер вагона (можно назначать автоматически), тип вагона, кол-во свободных и занятых мест (для пассажирского вагона) или кол-во свободного и занятого объема (для грузовых вагонов).
-=end
+
   def create_station
     puts "Введите имя станции"
     name = gets.chomp
@@ -133,7 +131,8 @@ private
       puts e.message.to_s
       retry
     end
-  end
+
+
 
   def create_carriage
     puts "Выберите тип(1 - грузовой, 2 - пассажирский, 0 - вернуться в главное меню)"
@@ -150,9 +149,10 @@ private
       break
     else
       break
-  end
+    end
   end
 end
+
   def print_routes_list
     puts "Список доступных маршрутов"
     @routes.each_with_index { |name, index| puts "#{name.point} => #{index}" }
@@ -201,7 +201,7 @@ end
   end
 
   def give_route
-    select_train.set_point(select_route)
+    select_train.assign_point(select_route)
   end
 
   def select_route
@@ -255,6 +255,7 @@ end
       end
     end
   end
+
   def fill_carriage
     c = select_carriage
     if c.is_a? (CargoCarriage)
@@ -264,4 +265,5 @@ end
       c.booking
     end
   end
+end
 end
