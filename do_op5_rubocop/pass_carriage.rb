@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-# PassCarriage
 
+# PassCarriage
 class PassCarriage < Carriage
   def initialize(space)
     super(space)
