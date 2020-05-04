@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './acсesors'
 require './valid'
 
@@ -5,10 +7,14 @@ class Test
   extend Accesors
   include Validation
   attr_accessor_with_history :my_attr, :a, :b, :c
-  strong_attr_accessor(:q, "Integer")
+  strong_attr_accessor(:q, 'Integer')
+  def initialize
+    @a = ''
+    @b = 'qwe'
+    @c = ' '
   end
-t = Test.new
-t.a= 12
-t.a= 13
-t.a= 14
-t.q= 123
+  validate :a, :type, String
+  validate :b, :format, /^qwe/
+  validate :c, :presence
+end
+Test.new.validate!

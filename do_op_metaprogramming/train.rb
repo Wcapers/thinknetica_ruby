@@ -7,10 +7,11 @@ require './modules/valid'
 class Train
   include Manufacturer
   include InstanceCounter
-  include Valid
+  include Validation
+  NUMBER_FORMAT = /^[а-яa-z0-9]{3}-?[а-яa-z0-9]{2}$/i.freeze
   attr_accessor :speed, :carriages, :point, :curent
   attr_reader :number, :type
-  NUMBER_FORMAT = /^[а-яa-z0-9]{3}-?[а-яa-z0-9]{2}$/i.freeze
+  validate :number, :format, NUMBER_FORMAT
   @@all_trains = []
   def initialize(number)
     @number = number.to_s
@@ -78,12 +79,5 @@ class Train
     id = @point.point.index(@curent)
     [@point.point[id - 1].name, @point.point[id].name,
      @point.point[id + 1].name]
-  end
-
-  private
-
-  def validate!
-    raise 'Неправильный формат номера' if NUMBER_FORMAT !~ @number
-    raise 'Неправильная длина номера' if @number.size < 4 || @number.size > 7
   end
 end

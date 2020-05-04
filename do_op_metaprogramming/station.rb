@@ -7,8 +7,8 @@ class Station
   attr_accessor :trains
   attr_reader :name
   include InstanceCounter
-  include Valid
-
+  include Validation
+  validate :name, :format, /[\w]{3,}/ # не меньше трех символов
   def initialize(name)
     @name = name
     validate!
@@ -42,11 +42,5 @@ class Station
   def list_type(type)
     @trains.select { |i| i.type == type } if @trains.any?
     raise "Поездов типа #{type} нет" unless @trains.any?
-  end
-
-  private
-
-  def validate!
-    raise 'Слишком короткое название' if @name.size < 3
   end
 end
