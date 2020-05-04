@@ -19,7 +19,7 @@ module Validation
     def validate!
       self.class.validates.each do |val|
         name = instance_variable_get("@#{val[:name]}")
-        send(val[:type], name, val[:options])
+        send("valid_#{val[:type]}".to_sym, name, val[:options])
       end
     end
 
@@ -30,15 +30,15 @@ module Validation
       false
     end
 
-    def presence(name, _options)
+    def valid_presence(name, _options)
       raise 'Атрибут не инициализирован' if name.nil? || name.empty?
     end
 
-    def format(number, format)
+    def valid_format(number, format)
       raise 'Атрибут не подходит' if number.to_s !~ format
     end
 
-    def type(name, type)
+    def valid_type(name, type)
       unless name.class.to_s == type.to_s
         raise 'Требуется соответствие значения атрибута заданному классу'
       end
