@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require './station'
 require './modules/instance_counter'
 require './modules/valid'
@@ -15,6 +16,7 @@ class Route
     validate!
     register_instance
   end
+
   def add_station(station)
     @point.insert(-2, station)
   end
